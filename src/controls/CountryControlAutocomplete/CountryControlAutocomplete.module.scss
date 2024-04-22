@@ -1,0 +1,65 @@
+@import "../../variables";
+
+.container {
+  position: relative;
+
+  .list_wrapper {
+    z-index: 9;
+
+    position: absolute;
+    top: 100%;
+    left: 0;
+    box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 100%;
+    max-height: 100px;
+    background-color: $background;
+
+    & .list {
+      width: 100%;
+      list-style: none;
+      max-height: inherit;
+      overflow-y: scroll;
+
+      & .item {
+        padding: 5px 10px;
+        cursor: pointer;
+        transition: color .1s, background-color .3s ease-in-out;
+        color: $text-color;
+        display: flex;
+        justify-content: space-between;
+
+        &:hover {
+          color: $text-color-primary;
+          background-color: $primary;
+        }
+
+
+        & .name, .fullName {
+          font-size: 12px;
+
+        }
+      }
+
+      &::-webkit-scrollbar {
+        width: 7px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background-color: transparent;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: $primary;
+        cursor: pointer;
+      }
+    }
+
+    & .message {
+      font-size: 16px;
+      text-align: center;
+      margin: 10px 0;
+    }
+  }
+}
