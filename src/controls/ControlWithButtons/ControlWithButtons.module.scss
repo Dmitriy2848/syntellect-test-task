@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+
+  & .rightButtons, .leftButtons {
+    display: flex;
+    flex-wrap: nowrap;
+
+    & button:not(:first-child) {
+      margin-left: 5px;
+    }
+  }
+
+  & .leftButtons  {
+    margin-right: 5px;
+  }
+
+  & .rightButtons {
+    margin-left: 5px;
+  }
+
+}
+
