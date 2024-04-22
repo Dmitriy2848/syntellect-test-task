@@ -17,7 +17,7 @@ const ControlWithButtons: FC<IControlWithButtons> = ({
 }) => {
   const viewModel = useMemo(() => {
     return new ControlWithButtonsViewModel();
-  }, [rightButtons, leftButtons]);
+  }, []);
 
   return (
     <div className={[className, s.container].join(" ")}>
