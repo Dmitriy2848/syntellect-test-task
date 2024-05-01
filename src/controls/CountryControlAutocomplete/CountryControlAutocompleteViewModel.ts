@@ -31,8 +31,6 @@ class CountryControlAutocompleteViewModel
 
   setInputValue(nextValue: string) {
     this.model.inputValue = nextValue;
-
-    this.getCountriesByName(nextValue);
   }
 
   get inputValue() {

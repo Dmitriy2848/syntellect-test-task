@@ -1,4 +1,4 @@
-import { FC, useMemo, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { observer } from "mobx-react-lite";
 
 import { CountryControlAutocompleteViewModel } from "./CountryControlAutocompleteViewModel";
@@ -6,6 +6,7 @@ import InputText from "../../components/InputText";
 import { useOnClickOutside } from "../../hooks";
 
 import s from "./CountryControlAutocomplete.module.scss";
+import { debounce } from "../../utils/debounce";
 
 interface IControlAutocomplete {
   maxHints?: number;
@@ -21,11 +22,26 @@ const CountryControlAutocomplete: FC<IControlAutocomplete> = ({
     return new CountryControlAutocompleteViewModel(maxHints);
   }, [maxHints]);
 
+  const debouncedFetchCountries = useCallback(
+    debounce(() => {
+      viewModel.getCountriesByName(viewModel.inputValue);
+    }, 400),
+    [],
+  );
+
   useOnClickOutside(list, () => {
     setPopupIsVisible(false);
   });
 
+  useEffect(() => {
+    debouncedFetchCountries();
+  }, [viewModel.inputValue]);
+
   let listContent = useMemo(() => {
+    if (viewModel.loading) {
+      return <div className={s.message}>Загружаем подсказки</div>;
+    }
+
     if (viewModel.countries.length) {
       return (
         <ul className={s.list}>
@@ -48,10 +64,6 @@ const CountryControlAutocomplete: FC<IControlAutocomplete> = ({
 
     if (!viewModel.inputValue.length) {
       return <div className={s.message}>Начните вводить значение</div>;
-    }
-
-    if (viewModel.loading) {
-      return <div className={s.message}>Загружаем подсказки</div>;
     }
 
     if (!viewModel.countries.length) {
